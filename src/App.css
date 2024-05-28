@@ -1,0 +1,24 @@
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  padding: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bbbbbb;
+  border-radius: 10px;
+}
+
+.required:after {
+  content: " *";
+  color: red;
+}
