@@ -4,20 +4,24 @@ import UserLayout from "./layouts/UserLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import UserHome from "./pages/user/UserHome";
 import UserLogin from "./pages/user/auth/UserLogin";
-import LandingPage from "./pages/LandingPage";
+import UserSignUp from "./pages/user/auth/UserSignUp";
+import UserProfile from "./pages/user/auth/UserProfile";
 
 const App = () => {
-  const [userType] = useState<string>("User");
+  const [userType] = useState<string>("");
 
   return (
     <>
       <Routes>
-        {userType === "User" ? (
+        {userType === "User" || userType === "" ? (
           <Route element={<UserLayout />}>
             <Route path="/" element={<UserHome />} />
+            <Route path="/signIn" element={<UserLogin />} />
+            <Route path="/signUp" element={<UserSignUp />} />
+            <Route path="/userProfile" element={<UserProfile />} />
             {/* <Route path="/userJob" element={<JobPage />} />
             <Route path="/userCourse" element={<CoursePage />} />
-            <Route path="/userProfile" element={<UserProfile />} />
+            />
             <Route path="/userService" element={<ServicePage />} />
             <Route path="/userChat" element={<ChatPage />} />
             <Route path="/userNetwork" element={<NetworkPage />} /> */}
@@ -26,9 +30,7 @@ const App = () => {
           <Route element={<AdminLayout />}>{/* Add Amin ROutes */}</Route>
         ) : (
           <>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/signIn" element={<UserLogin />} />
-            {/*  <Route path="/signUp" element={<UserSignUp />} />
+            {/*  
             <Route path="/admin/signUp" element={<AdminSignUp />} />
             <Route path="/admin" element={<AdminLoginPage />} /> */}
 

@@ -12,13 +12,17 @@ import {
   UserOutlined,
   MessageOutlined,
   LogoutOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 import { MdOutlineCastForEducation } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import AiChat from "./chat/AiChat";
 
 const UserHeader = () => {
-  const [searchPlaceHolder] = useState("Search...");
+  const [searchPlaceHolder] = useState<string>("Search...");
+  const [open, setOpen] = useState<boolean>(false);
+  const [userId] = useState<string>("sdc");
 
   const navigate = useNavigate();
 
@@ -66,16 +70,28 @@ const UserHeader = () => {
             </h1>
           </span>
           <div className="flex items-center justify-end gap-2">
-            <Link to="/userChat">
-              <Tooltip placement="bottom" title={"Chat"}>
+            <Link to="/">
+              <Tooltip placement="bottom" title={"Home"}>
                 <Button
                   type="text"
                   shape="circle"
-                  icon={<MessageOutlined />}
-                  style={{ color: "white" }}
+                  icon={<HomeOutlined />}
+                  style={{ color: "white", fontSize: "1.2rem" }}
                 />
               </Tooltip>
             </Link>
+
+            <Tooltip placement="bottom" title={"Ask From AI"}>
+              <Button
+                type="text"
+                shape="circle"
+                icon={<MessageOutlined />}
+                style={{ color: "white" }}
+                onClick={() => {
+                  setOpen(true);
+                }}
+              />
+            </Tooltip>
             <Input
               placeholder={searchPlaceHolder}
               prefix={<SearchOutlined />}
@@ -94,11 +110,26 @@ const UserHeader = () => {
             </Link>
           </div>
 
-          <Dropdown overlay={menu} placement="bottomLeft">
-            <Avatar size="large" icon={<UserOutlined />} />
-          </Dropdown>
+          {userId ? (
+            <Dropdown overlay={menu} placement="bottomLeft">
+              <Avatar size="large" icon={<UserOutlined />} />
+            </Dropdown>
+          ) : (
+            <Link to="/signIn">
+              <Button
+                className="rounded-full"
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                Login
+              </Button>
+            </Link>
+          )}
         </div>
       </nav>
+
+      <AiChat open={open} setOpen={setOpen} />
     </>
   );
 };
