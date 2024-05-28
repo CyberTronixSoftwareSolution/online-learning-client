@@ -6,11 +6,7 @@ import {
   MailOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import type { ProgressProps } from "antd";
-const twoColors: ProgressProps["strokeColor"] = {
-  "0%": "#108ee9",
-  "100%": "#87d068",
-};
+import DataNotFound from "../../../components/DataNotFound";
 
 const UserProfile = () => {
   return (
@@ -75,7 +71,12 @@ const UserProfile = () => {
             </h5>
           </div>
           <div className="px-6 py-2">
-            <div className="overflow-hidden overflow-y-scroll"></div>
+            <div
+              className="overflow-hidden overflow-y-scroll"
+              style={{ height: "240px" }}
+            >
+              <DataNotFound name={"Result Data"} />
+            </div>
           </div>
         </div>
 
