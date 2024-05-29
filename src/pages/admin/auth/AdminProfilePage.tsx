@@ -12,7 +12,6 @@ import { useLoading } from "../../../shared/context/LoadingContext";
 import { useEffect, useState } from "react";
 import { LocalStorageService } from "../../../shared/localStorage.service";
 import { useNavigate } from "react-router-dom";
-import Dragger from "antd/es/upload/Dragger";
 import uploadImageToCloudinary from "../../../shared/cloudinaryUpload.service";
 
 const AdminProfilePage = () => {
