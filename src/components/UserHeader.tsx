@@ -18,16 +18,21 @@ import { MdOutlineCastForEducation } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import AiChat from "./chat/AiChat";
+import { useAuth } from "../shared/context/AuthContext";
+import { LocalStorageService } from "../shared/localStorage.service";
 
 const UserHeader = () => {
   const [searchPlaceHolder] = useState<string>("Search...");
   const [open, setOpen] = useState<boolean>(false);
-  const [userId] = useState<string>("sdc");
+
+  const { authUser, setUser } = useAuth();
 
   const navigate = useNavigate();
 
   const logout = () => {
     navigate("/signIn");
+    setUser({} as any);
+    LocalStorageService.removeUser();
   };
 
   const menu = (
@@ -110,7 +115,7 @@ const UserHeader = () => {
             </Link>
           </div>
 
-          {userId ? (
+          {authUser?._id ? (
             <Dropdown overlay={menu} placement="bottomLeft">
               <Avatar size="large" icon={<UserOutlined />} />
             </Dropdown>

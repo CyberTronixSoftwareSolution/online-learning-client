@@ -1,23 +1,99 @@
-import { AnyObject } from "antd/es/_util/type";
+import { Input } from "antd";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoading } from "../../../shared/context/LoadingContext";
+import { CustomToastService } from "../../../shared/message.service";
 
-// interface AdminLoginRequest {
-//   email: string;
-//   password: string;
-// }
+interface AdminSignUpRequest {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+}
 
 const AdminSignUp = () => {
-  const [formData, setFormData] = useState<AnyObject>({});
-  const [errors] = useState<AnyObject>({});
+  const [formData, setFormData] = useState<AdminSignUpRequest>(
+    {} as AdminSignUpRequest
+  );
+  const [errors, setErrors] = useState<any>({});
+  const { axiosInstance } = useLoading();
 
-  const handleChange = (e: AnyObject) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+  const navigate = useNavigate();
+
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const validationErrors = validate(formData);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    } else {
+      setErrors({});
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      CustomToastService.warning(
+        "Password and confirm password should be same!"
+      );
+      return;
+    }
+
+    console.log(formData);
+    try {
+      const response = await axiosInstance.post("/admin/register", formData);
+
+      if (response.data) {
+        CustomToastService.success(response.data.message);
+        clearValues();
+        navigate("/admin");
+      }
+    } catch (error: any) {
+      CustomToastService.error(error.response.data.message);
+    }
+  };
+
+  const clearValues = () => {
+    setFormData({} as AdminSignUpRequest);
+  };
+
+  const validate = (data: AdminSignUpRequest) => {
+    const errors = {} as any;
+    if (!data.name || data.name === "") {
+      errors.name = "Name is required";
+    }
+
+    if (!data.phone || data.phone === "") {
+      errors.phone = "Phone is required";
+    }
+
+    if (!data.email || data.email === "") {
+      errors.email = "Email is required";
+    } else if (!isValidEmail(data.email)) {
+      errors.email = "Invalid email format";
+    }
+
+    if (!data.password) {
+      errors.password = "Password is required";
+    }
+
+    if (!data.confirmPassword) {
+      errors.confirmPassword = "Password is required";
+    }
+
+    return errors;
+  };
+
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
   return (
     <>
-      {/* {loading && <CustomLoading />} */}
       <div className="bg-gray-50 font-[sans-serif] text-[#333]">
         <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
           <div className="max-w-md w-full border py-8 px-6 rounded border-gray-300 bg-white">
@@ -35,12 +111,13 @@ const AdminSignUp = () => {
                 <label className="text-sm font-medium required">
                   Full Name
                 </label>
-                <input
+
+                <Input
                   name="name"
                   type="text"
                   required
                   className="w-full text-sm px-2 py-2 rounded outline-none border-2 focus:border-blue-500"
-                  placeholder="Ful Name"
+                  placeholder="Full Name"
                   id="name"
                   onChange={handleChange}
                   value={formData.name}
@@ -49,30 +126,33 @@ const AdminSignUp = () => {
                   <div className="text-red-500 text-xs">{errors.name}</div>
                 )}
               </div>
-              <div>
-                <label className="text-sm font-medium required">
-                  Email address
-                </label>
-                <input
-                  name="email"
-                  type="email"
-                  required
-                  className="w-full text-sm px-2 py-2 rounded outline-none border-2 focus:border-blue-500"
-                  placeholder="Email address"
-                  id="email"
-                  onChange={handleChange}
-                  value={formData.email}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-xs">{errors.email}</p>
-                )}
-              </div>
+
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div>
+                  <label className="text-sm font-medium required">
+                    Email address
+                  </label>
+
+                  <Input
+                    name="email"
+                    type="email"
+                    required
+                    className="w-full text-sm px-2 py-2 rounded outline-none border-2 focus:border-blue-500"
+                    placeholder="Email address"
+                    id="email"
+                    onChange={handleChange}
+                    value={formData.email}
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-xs">{errors.email}</p>
+                  )}
+                </div>
+
                 <div>
                   <label className="text-sm font-medium required">
                     Phone Number
                   </label>
-                  <input
+                  <Input
                     name="phone"
                     type="tel"
                     required
@@ -80,33 +160,17 @@ const AdminSignUp = () => {
                     placeholder="Phone Number"
                     id="phone"
                     onChange={handleChange}
-                    onInput={(e: AnyObject) =>
-                      (e.target.value = e.target.value
-                        .replace(/[^0-9]/g, "")
-                        .slice(0, 12))
-                    }
                     value={formData.phone}
+                    onInput={
+                      ((e: any) => {
+                        e.target.value = e.target.value
+                          .replace(/[^0-9]/g, "")
+                          .slice(0, 12);
+                      }) as any
+                    }
                   />
                   {errors.phone && (
                     <div className="text-red-500 text-xs">{errors.phone}</div>
-                  )}
-                </div>
-                <div>
-                  <label className="text-sm font-medium required">Type</label>
-                  <select
-                    name="type"
-                    className="w-full text-sm px-2 py-2 rounded outline-none border-2 focus:border-blue-500"
-                    id="type"
-                    onChange={handleChange}
-                    value={formData.type}
-                  >
-                    <option value="0">Select Type</option>
-                    <option value="Consultant">Consultant</option>
-                    <option value="Employee">Employee</option>
-                    <option value="Businessman">Businessman</option>
-                  </select>
-                  {errors.type && (
-                    <div className="text-red-500 text-xs">{errors.type}</div>
                   )}
                 </div>
               </div>
@@ -115,7 +179,8 @@ const AdminSignUp = () => {
                   <label className="text-sm font-medium required">
                     Password
                   </label>
-                  <input
+
+                  <Input.Password
                     name="password"
                     type="password"
                     required
@@ -135,8 +200,9 @@ const AdminSignUp = () => {
                   <label className="text-sm font-medium required">
                     Confirm Password
                   </label>
-                  <input
-                    name="password"
+
+                  <Input.Password
+                    name="confirmPassword"
                     type="password"
                     required
                     className="w-full text-sm px-2 py-2 rounded outline-none border-2 focus:border-blue-500"
@@ -156,6 +222,7 @@ const AdminSignUp = () => {
                 <button
                   type="button"
                   className="w-full py-2.5 px-4 text-sm rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                  onClick={onSubmit}
                 >
                   Sign Up
                 </button>
