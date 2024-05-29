@@ -1,5 +1,8 @@
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+interface MessageProp {
+  lastMessageRef: any;
+}
 const Message = () => {
   return (
     <div className={`flex flex-col gap-1 items-start`}>

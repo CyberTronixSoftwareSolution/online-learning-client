@@ -1,6 +1,7 @@
 import { SendOutlined } from "@ant-design/icons";
 import { Button, Drawer, Input } from "antd";
 import Message from "./Message";
+import { useRef } from "react";
 
 interface AiChatProps {
   setOpen: (open: boolean) => void;
@@ -8,6 +9,7 @@ interface AiChatProps {
 }
 
 const AiChat = (prop: AiChatProps) => {
+  const lastMessageRef = useRef();
   return (
     <Drawer
       title="Feel free to ask anything"
@@ -25,12 +27,9 @@ const AiChat = (prop: AiChatProps) => {
       }
     >
       <div className="flex flex-col gap-2">
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
+        {Array.from({ length: 10 }).map((_, i) => (
+          <Message key={i} />
+        ))}
       </div>
     </Drawer>
   );
