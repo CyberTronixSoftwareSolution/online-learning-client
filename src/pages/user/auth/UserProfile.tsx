@@ -6,7 +6,7 @@ import {
   MailOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import DataNotFound from "../../../components/DataNotFound";
+// import DataNotFound from "../../../components/DataNotFound";
 import ExamResultCard from "../../../components/ExamResultCard";
 
 const UserProfile = () => {

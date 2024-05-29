@@ -16,7 +16,7 @@ const { Header, Content } = Layout;
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
-  const [breadcrumbItem, setBreadcrumbItem] = useState<any>([]);
+  const [breadcrumbItem, setBreadcrumbItem] = useState<React.ReactNode[]>([]);
   const [pageTitle, setPageTitle] = useState<string>("Dashboard");
   const {
     token: { colorBgContainer, borderRadiusLG },

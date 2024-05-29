@@ -14,7 +14,7 @@ import AdminLogin from "./pages/admin/auth/AdminLogin";
 import AdminProfilePage from "./pages/admin/auth/AdminProfilePage";
 
 const App = () => {
-  const [userType] = useState<string>("");
+  const [userType] = useState<string>("j");
 
   return (
     <>

@@ -9,7 +9,7 @@ const UserLayout = () => {
         <UserHeader />
       </header>
 
-      <main className="flex-grow bg-blue-50 z-30 p-3">
+      <main className="flex-grow bg-blue-50 z-30">
         <Outlet />
       </main>
       <footer className="mt-auto">

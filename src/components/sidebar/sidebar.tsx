@@ -1,12 +1,10 @@
 import { LuGraduationCap, LuUsers2 } from "react-icons/lu";
 import { AiOutlineDashboard } from "react-icons/ai";
-import { IoBriefcaseOutline } from "react-icons/io5";
-import { MdSupportAgent } from "react-icons/md";
-import { IoChatbubblesOutline } from "react-icons/io5";
+
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Layout, Menu } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const { Sider } = Layout;
 
@@ -16,9 +14,23 @@ interface SideBarProp {
 
 const SideBar = (prop: SideBarProp) => {
   const [defaultSelectedKeys, setDefaultSelectedKeys] = useState(0);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname;
 
+  useEffect(() => {
+    const pathArr = path.split("/");
+    if (pathArr.includes("admin") && pathArr.includes("users")) {
+      setDefaultSelectedKeys(1);
+    } else if (pathArr.includes("admin") && pathArr.includes("chat")) {
+      setDefaultSelectedKeys(5);
+    } else if (pathArr.includes("admin") && pathArr.includes("profile")) {
+      setDefaultSelectedKeys(3);
+    } else if (pathArr.includes("admin") && pathArr.includes("dashboard")) {
+      setDefaultSelectedKeys(0);
+    }
+  }, [defaultSelectedKeys, path]);
   return (
     <Sider
       trigger={null}
@@ -91,6 +103,14 @@ const SideBar = (prop: SideBarProp) => {
             label: "Courses",
             onClick: () => {
               navigate("/admin/courses");
+            },
+          },
+          {
+            key: "3",
+            icon: <UserOutlined style={{ fontSize: "1.2rem" }} />,
+            label: "Profile",
+            onClick: () => {
+              navigate("/admin/profile");
             },
           },
         ]}

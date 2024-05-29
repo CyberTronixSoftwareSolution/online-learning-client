@@ -22,3 +22,29 @@
   content: " *";
   color: red;
 }
+
+.ant-carousel .slick-dots li button {
+  background: blue;
+  opacity: 0.4;
+}
+
+.ant-carousel .slick-dots li.slick-active button {
+  opacity: 1;
+  background: blue;
+}
+
+/* nex buttons */
+.ant-carousel .slick-next {
+  color: blue;
+}
+
+/* prev buttons */
+.ant-carousel .slick-prev {
+  color: blue;
+}
+
+.stroke-custom {
+  path {
+    stroke-width: 1.2px !important;
+  }
+}
