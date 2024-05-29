@@ -1,14 +1,24 @@
+import { Avatar } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 const Message = () => {
   return (
     <div className={`flex flex-col gap-1 items-start`}>
-      <div className="flex gap-2">
-        <div
-          className={`px-3.5 py-2 bg-blue-500 rounded justify-start  items-center gap-3 inline-flex`}
-        >
-          <h5 className={`text-white text-sm font-normal leading-snug`}>
-            Hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii sibvijwebivew ewk view
-            vie flex-wrap-reversewvinwevnwev wfiwjeijewi9jvenwv
-          </h5>
+      {/* flex-row-reverse */}
+      <div className="flex items-start gap-2.5">
+        <Avatar size={28} icon={<UserOutlined />} />
+        <div className="flex flex-col w-full max-w-[340px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+          <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            <span className="text-sm font-semibold text-gray-900 dark:text-white">
+              Coursera AI
+            </span>
+            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+              11:46
+            </span>
+          </div>
+          <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">
+            That's awesome. I think our users will really appreciate the
+            improvements.
+          </p>
         </div>
       </div>
     </div>

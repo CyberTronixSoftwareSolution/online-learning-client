@@ -29,6 +29,8 @@ const AiChat = (prop: AiChatProps) => {
         <Message />
         <Message />
         <Message />
+        <Message />
+        <Message />
       </div>
     </Drawer>
   );
