@@ -7,6 +7,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import DataNotFound from "../../../components/DataNotFound";
+import ExamResultCard from "../../../components/ExamResultCard";
 
 const UserProfile = () => {
   return (
@@ -75,7 +76,16 @@ const UserProfile = () => {
               className="overflow-hidden overflow-y-scroll"
               style={{ height: "240px" }}
             >
-              <DataNotFound name={"Result Data"} />
+              {/* <DataNotFound name={"Result Data"} /> */}
+
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-3 mt-1">
+                <ExamResultCard />
+                <ExamResultCard />
+                <ExamResultCard />
+                <ExamResultCard />
+                <ExamResultCard />
+                <ExamResultCard />
+              </div>
             </div>
           </div>
         </div>
