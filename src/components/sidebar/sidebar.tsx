@@ -4,7 +4,9 @@ import { AiOutlineDashboard } from "react-icons/ai";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Layout, Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useLoading } from "../../shared/context/LoadingContext";
+import { useAuth } from "../../shared/context/AuthContext";
 
 const { Sider } = Layout;
 
@@ -14,10 +16,13 @@ interface SideBarProp {
 
 const SideBar = (prop: SideBarProp) => {
   const [defaultSelectedKeys, setDefaultSelectedKeys] = useState(0);
-  // const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
+
+  const { axiosInstance } = useLoading();
+  const { authUser } = useAuth();
 
   useEffect(() => {
     const pathArr = path.split("/");
@@ -31,6 +36,23 @@ const SideBar = (prop: SideBarProp) => {
       setDefaultSelectedKeys(0);
     }
   }, [defaultSelectedKeys, path]);
+
+  const getUser = async () => {
+    try {
+      const response = await axiosInstance.get(`/admin/get/${authUser?._id}`);
+      if (response.data) {
+        setUser(response.data);
+      }
+    } catch (error: any) {
+      console.log(error.response.data.message);
+    }
+  };
+
+  useMemo(() => {
+    if (authUser) {
+      getUser();
+    }
+  }, [authUser]);
   return (
     <Sider
       trigger={null}
@@ -42,34 +64,25 @@ const SideBar = (prop: SideBarProp) => {
       }}
     >
       {prop.collapsed ? (
-        // <>
-        //   {loading & <CustomLoading />}
-        //   {user.image ? (
-        //     <Avatar size={40} src={user.image} className="mt-4 mb-5" />
-        //   ) : (
-        //     <Avatar size={40} icon={<UserOutlined />} className="mt-4 mb-5" />
-        //   )}
-        // </>
-        <Avatar size={40} icon={<UserOutlined />} className="mt-4 mb-5" />
+        <>
+          {user.image ? (
+            <Avatar size={40} src={user.image} className="mt-4 mb-5" />
+          ) : (
+            <Avatar size={40} icon={<UserOutlined />} className="mt-4 mb-5" />
+          )}
+        </>
       ) : (
         <>
           {/* Add avatar and logged user name  */}
           <div className="flex items-center flex-col mt-4 mb-5">
-            {/* {user?.image ? (
+            {user?.image ? (
               <Avatar size={60} src={user?.image} />
             ) : (
               <Avatar size={40} icon={<UserOutlined />}></Avatar>
-            )} */}
-            <Avatar size={40} icon={<UserOutlined />}></Avatar>
-            <div className="text-base font-bold leading-none tracking-tight text-white mt-5">
-              Nimna Thiranjaya
+            )}
+            <div className="text-base font-bold leading-none tracking-tight text-white mt-5 mb-2">
+              {user?.name}
             </div>
-
-            <div className="text-sm font-semibold text-gray-300 mt-3">
-              Role : Admin
-            </div>
-
-            {/* divider */}
 
             <div className="w-full h-0.5 bg-gray-600 mt-3"></div>
           </div>
