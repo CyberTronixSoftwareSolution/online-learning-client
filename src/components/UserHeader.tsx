@@ -59,7 +59,7 @@ const UserHeader = () => {
   );
   return (
     <>
-      <nav className="relative flex w-full bg-zinc-50 py-2 shadow-dark-mild dark:bg-blue-500 lg:py-4">
+      <nav className="relative flex w-full py-2 shadow-dark-mild bg-blue-500 lg:py-4">
         <div className="flex w-full flex-wrap items-center justify-between px-3">
           <span className="text-xl text-black dark:text-white">
             <h1 className="text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-2xl dark:text-white">

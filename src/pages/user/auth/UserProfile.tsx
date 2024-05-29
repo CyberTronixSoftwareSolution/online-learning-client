@@ -26,7 +26,7 @@ const UserProfile = () => {
             <Avatar size={64} icon={<UserOutlined />} />
 
             <div className="flex flex-col">
-              <div className="text-xl font-bold leading-none tracking-tight text-black md:text-3xl lg:text-2xl dark:text-black">
+              <div className="text-xl font-bold leading-none tracking-tight text-black md:text-3xl lg:text-2xl">
                 Nimna Thiranjaya
               </div>
               <div className="flex items-center gap-4">
