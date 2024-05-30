@@ -15,6 +15,7 @@ import AdminProfilePage from "./pages/admin/auth/AdminProfilePage";
 import { Spin } from "antd";
 import { useLoading } from "./shared/context/LoadingContext";
 import { useAuth } from "./shared/context/AuthContext";
+import ModulePage from "./pages/user/ModulePage";
 
 const App = () => {
   const [userType, setUserType] = useState<string>("User");
@@ -50,6 +51,7 @@ const App = () => {
               <Route path="/signIn" element={<UserLogin />} />
               <Route path="/signUp" element={<UserSignUp />} />
               <Route path="/userProfile" element={<UserProfile />} />
+              <Route path="/userModule" element={<ModulePage />} />
             </Route>
           ) : userType === "Admin" ? (
             <Route element={<AdminLayout />}>

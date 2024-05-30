@@ -123,7 +123,7 @@ const UserHeader = () => {
               style={{ width: 250 }}
               className="mr-2 ml-2 rounded-full"
             />
-            <Link to="/userCourse">
+            <Link to="/userModule">
               <Tooltip placement="bottom" title={"Courses"}>
                 <Button
                   type="text"
