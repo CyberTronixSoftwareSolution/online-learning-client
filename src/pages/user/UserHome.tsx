@@ -1,4 +1,3 @@
-
 import { Carousel } from "antd";
 import Testimonial from "../../components/testimonial/Testimonial";
 
@@ -16,21 +15,21 @@ const UserHome = () => {
         >
           <div>
             <img
-              src="https://res.cloudinary.com/dd3v8dwin/image/upload/v1714895238/cyberthrends/fohbyftvegblaiybvckq.png"
+              src="https://res.cloudinary.com/dd3v8dwin/image/upload/v1717096867/samples/1_etjoci.png"
               alt="img"
               style={{ height: "500px", width: "100%", objectFit: "cover" }}
             />
           </div>
           <div>
             <img
-              src="https://res.cloudinary.com/dd3v8dwin/image/upload/v1714896132/cyberthrends/White_and_Violet_Professional_Modern_Technology_Pitch_Deck_Presentation_y7h4po.jpg"
+              src="https://res.cloudinary.com/dd3v8dwin/image/upload/v1717096867/samples/2_rqzsis.png"
               alt="img"
               style={{ height: "500px", width: "100%", objectFit: "cover" }}
             />
           </div>
           <div>
             <img
-              src="https://res.cloudinary.com/dd3v8dwin/image/upload/v1714896421/cyberthrends/White_and_Violet_Professional_Modern_Technology_Pitch_Deck_Presentation_2_wqy10u.jpg"
+              src="https://res.cloudinary.com/dd3v8dwin/image/upload/v1717096866/samples/3_mtbpjw.png"
               alt="img"
               style={{ height: "500px", width: "100%", objectFit: "cover" }}
             />
@@ -45,8 +44,18 @@ const UserHome = () => {
                   Welcome to Coursera Learning
                 </h2>
                 <p className="mb-4">
-                  Welcome to Coursera Learning, your ultimate destination for online learning. At Coursera Learning, we believe that education should be accessible, engaging, and tailored to fit your unique needs. Whether you're looking to advance your career, explore new hobbies, or gain in-depth knowledge in a specific field, our diverse range of courses and expert instructors are here to guide you every step of the way. With interactive lessons, real-time assessments, and a supportive learning community, achieving your educational goals has never been more attainable. Join us today and start your journey towards knowledge and success with Coursera Learning!
-                </p>               
+                  Welcome to Coursera Learning, your ultimate destination for
+                  online learning. At Coursera Learning, we believe that
+                  education should be accessible, engaging, and tailored to fit
+                  your unique needs. Whether you're looking to advance your
+                  career, explore new hobbies, or gain in-depth knowledge in a
+                  specific field, our diverse range of courses and expert
+                  instructors are here to guide you every step of the way. With
+                  interactive lessons, real-time assessments, and a supportive
+                  learning community, achieving your educational goals has never
+                  been more attainable. Join us today and start your journey
+                  towards knowledge and success with Coursera Learning!
+                </p>
               </div>
               <div className="grid grid-cols-2 gap-4 mt-8">
                 <img
@@ -86,11 +95,23 @@ const UserHome = () => {
               </div>
               <div className="font-light text-gray-500 sm:text-lg ">
                 <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 ">
-                 Our Course Modules
+                  Our Course Modules
                 </h2>
                 <p className="mb-4">
-                Dive into the world of knowledge with our comprehensive Science and Maths courses at Coursera Learning. Whether you're a curious beginner or an advanced learner, our courses are designed to cater to all levels. Explore the mysteries of the universe through our engaging Science modules, from physics to biology, and uncover the principles that govern our natural world. Sharpen your problem-solving skills with our Maths courses, covering everything from basic arithmetic to advanced calculus. Our expert instructors and interactive content ensure that you gain a deep understanding of these fundamental subjects, preparing you for academic success and beyond. Embark on your educational journey with Coursera Learning and discover the limitless possibilities of Science and Maths!
-                </p>            
+                  Dive into the world of knowledge with our comprehensive
+                  Science and Maths courses at Coursera Learning. Whether you're
+                  a curious beginner or an advanced learner, our courses are
+                  designed to cater to all levels. Explore the mysteries of the
+                  universe through our engaging Science modules, from physics to
+                  biology, and uncover the principles that govern our natural
+                  world. Sharpen your problem-solving skills with our Maths
+                  courses, covering everything from basic arithmetic to advanced
+                  calculus. Our expert instructors and interactive content
+                  ensure that you gain a deep understanding of these fundamental
+                  subjects, preparing you for academic success and beyond.
+                  Embark on your educational journey with Coursera Learning and
+                  discover the limitless possibilities of Science and Maths!
+                </p>
               </div>
             </div>
           </section>
@@ -101,4 +122,3 @@ const UserHome = () => {
 };
 
 export default UserHome;
-

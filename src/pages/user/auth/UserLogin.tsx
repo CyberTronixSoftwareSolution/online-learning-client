@@ -169,7 +169,7 @@ const UserLogin = () => {
             className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
             style={{
               backgroundImage:
-                "url('https://res.cloudinary.com/dd3v8dwin/image/upload/v1717094657/login_jgzl2o.png')",
+                "url('https://res.cloudinary.com/dd3v8dwin/image/upload/v1717097044/samples/Computer_login-bro_1_ie1qta.png')",
             }}
           ></div>
         </div>
