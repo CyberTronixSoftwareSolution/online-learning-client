@@ -25,6 +25,7 @@ import { LocalStorageService } from "../../../shared/localStorage.service";
 import uploadImageToCloudinary from "../../../shared/cloudinaryUpload.service";
 import { CustomToastService } from "../../../shared/message.service";
 import { useNavigate } from "react-router-dom";
+import DataNotFound from "../../../components/DataNotFound";
 
 const UserProfile = () => {
   const [loggedInUser, setLoggedInUser] = useState<any>(null);
@@ -32,7 +33,7 @@ const UserProfile = () => {
   const [errors, setErrors] = useState<any>({});
   const [open, setOpen] = useState<boolean>(false);
   const [fileList, setFileList] = useState<any>([]);
-  const [position, setPosition] = useState(1);
+  const [position, setPosition] = useState<number>(1);
 
   const { axiosInstance } = useLoading();
   const { authUser, setUser } = useAuth();
@@ -244,17 +245,49 @@ const UserProfile = () => {
             <div className="px-6 py-2">
               <div
                 className="overflow-hidden overflow-y-scroll"
-                style={{ height: "240px" }}
+                style={{
+                  height: "240px",
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                }}
               >
-                {/* <DataNotFound name={"Result Data"} /> */}
-
+                {position == 1 ? (
+                  <>
+                    {loggedInUser?.mathsexam?.length === 0 && (
+                      <DataNotFound name={"Maths Exam Result"} />
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {loggedInUser?.scienceexam?.length === 0 && (
+                      <DataNotFound name={"Science Exam Result"} />
+                    )}
+                  </>
+                )}
                 <div className="grid grid-cols-1 gap-4 mt-1 md:grid-cols-1 lg:grid-cols-3">
+                  {/* <ExamResultCard />
                   <ExamResultCard />
                   <ExamResultCard />
                   <ExamResultCard />
                   <ExamResultCard />
-                  <ExamResultCard />
-                  <ExamResultCard />
+                  <ExamResultCard /> */}
+                  {position == 1 ? (
+                    <>
+                      {loggedInUser?.mathsexam.map(
+                        (exam: any, index: number) => (
+                          <ExamResultCard key={index} />
+                        )
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {loggedInUser?.scienceexam.map(
+                        (exam: any, index: number) => (
+                          <ExamResultCard key={index} />
+                        )
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -284,7 +317,15 @@ const UserProfile = () => {
                 <Progress
                   type="dashboard"
                   steps={10}
-                  percent={75}
+                  percent={
+                    position == 1
+                      ? loggedInUser?.mathsLevel?.mark
+                        ? loggedInUser?.mathsLevel?.mark
+                        : 0
+                      : loggedInUser?.scienceLevel?.mark
+                      ? loggedInUser?.scienceLevel?.mark
+                      : 0
+                  }
                   trailColor="rgba(0, 0, 0, 0.06)"
                   strokeWidth={20}
                   size={180}
@@ -297,7 +338,13 @@ const UserProfile = () => {
                     Current Stage
                   </span>
                   <span className="text-2xl font-bold text-black">
-                    Intermediate
+                    {position == 1
+                      ? loggedInUser?.mathsLevel?.level
+                        ? loggedInUser?.mathsLevel?.level
+                        : "Beginner"
+                      : loggedInUser?.scienceLevel?.level
+                      ? loggedInUser?.scienceLevel?.level
+                      : "Beginner"}
                   </span>
                 </div>
                 <div className="flex flex-col">
@@ -305,7 +352,13 @@ const UserProfile = () => {
                     Total Points
                   </span>
                   <span className="text-2xl font-bold text-right text-black">
-                    200
+                    {position == 1
+                      ? loggedInUser?.mathsLevel?.points
+                        ? loggedInUser?.mathsLevel?.points
+                        : 0
+                      : loggedInUser?.scienceLevel?.points
+                      ? loggedInUser?.scienceLevel?.points
+                      : 0}
                   </span>
                 </div>
               </div>
