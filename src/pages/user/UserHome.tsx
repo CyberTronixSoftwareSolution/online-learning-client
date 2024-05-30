@@ -1,3 +1,4 @@
+
 import { Carousel } from "antd";
 import Testimonial from "../../components/testimonial/Testimonial";
 
@@ -41,19 +42,11 @@ const UserHome = () => {
             <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
               <div className="font-light text-gray-500 sm:text-lg ">
                 <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 ">
-                  We didn't reinvent the wheel
+                  Welcome to Coursera Learning
                 </h2>
                 <p className="mb-4">
-                  We are strategists, designers and developers. Innovators and
-                  problem solvers. Small enough to be simple and quick, but big
-                  enough to deliver the scope you want at the pace you need.
-                  Small enough to be simple and quick, but big enough to deliver
-                  the scope you want at the pace you need.
-                </p>
-                <p>
-                  We are strategists, designers and developers. Innovators and
-                  problem solvers. Small enough to be simple and quick.
-                </p>
+                  Welcome to Coursera Learning, your ultimate destination for online learning. At Coursera Learning, we believe that education should be accessible, engaging, and tailored to fit your unique needs. Whether you're looking to advance your career, explore new hobbies, or gain in-depth knowledge in a specific field, our diverse range of courses and expert instructors are here to guide you every step of the way. With interactive lessons, real-time assessments, and a supportive learning community, achieving your educational goals has never been more attainable. Join us today and start your journey towards knowledge and success with Coursera Learning!
+                </p>               
               </div>
               <div className="grid grid-cols-2 gap-4 mt-8">
                 <img
@@ -93,19 +86,11 @@ const UserHome = () => {
               </div>
               <div className="font-light text-gray-500 sm:text-lg ">
                 <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 ">
-                  We didn't reinvent the wheel
+                 Our Course Modules
                 </h2>
                 <p className="mb-4">
-                  We are strategists, designers and developers. Innovators and
-                  problem solvers. Small enough to be simple and quick, but big
-                  enough to deliver the scope you want at the pace you need.
-                  Small enough to be simple and quick, but big enough to deliver
-                  the scope you want at the pace you need.
-                </p>
-                <p>
-                  We are strategists, designers and developers. Innovators and
-                  problem solvers. Small enough to be simple and quick.
-                </p>
+                Dive into the world of knowledge with our comprehensive Science and Maths courses at Coursera Learning. Whether you're a curious beginner or an advanced learner, our courses are designed to cater to all levels. Explore the mysteries of the universe through our engaging Science modules, from physics to biology, and uncover the principles that govern our natural world. Sharpen your problem-solving skills with our Maths courses, covering everything from basic arithmetic to advanced calculus. Our expert instructors and interactive content ensure that you gain a deep understanding of these fundamental subjects, preparing you for academic success and beyond. Embark on your educational journey with Coursera Learning and discover the limitless possibilities of Science and Maths!
+                </p>            
               </div>
             </div>
           </section>
@@ -116,3 +101,4 @@ const UserHome = () => {
 };
 
 export default UserHome;
+
