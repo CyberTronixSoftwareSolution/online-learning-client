@@ -16,6 +16,7 @@ import { Spin } from "antd";
 import { useLoading } from "./shared/context/LoadingContext";
 import { useAuth } from "./shared/context/AuthContext";
 import ModulePage from "./pages/user/ModulePage";
+import AdminAdminPage from "./pages/admin/AdminAdminPage";
 
 const App = () => {
   const [userType, setUserType] = useState<string>("User");
@@ -57,6 +58,7 @@ const App = () => {
             <Route element={<AdminLayout />}>
               <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
               <Route path="/admin/users" element={<AdminUserPage />} />
+              <Route path="/admin/admins" element={<AdminAdminPage />} />
               <Route path="/admin/profile" element={<AdminProfilePage />} />
             </Route>
           ) : (

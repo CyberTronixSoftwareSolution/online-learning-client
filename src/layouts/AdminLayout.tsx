@@ -36,8 +36,8 @@ const AdminLayout = () => {
   useEffect(() => {
     const pathArr = path.split("/");
     if (pathArr.includes("admin") && pathArr.includes("users")) {
-      setBreadcrumbItem([<Breadcrumb.Item key="user">Users</Breadcrumb.Item>]);
-      setPageTitle("Users Management");
+      setBreadcrumbItem([<Breadcrumb.Item key="user">Management</Breadcrumb.Item>]);
+      setPageTitle("Management");
     } else if (pathArr.includes("admin") && pathArr.includes("profile")) {
       setBreadcrumbItem([
         <Breadcrumb.Item key="profile">Profile</Breadcrumb.Item>,

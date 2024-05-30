@@ -30,11 +30,11 @@ const SideBar = (prop: SideBarProp) => {
       setDefaultSelectedKeys(1);
     } else if (pathArr.includes("admin") && pathArr.includes("chat")) {
       setDefaultSelectedKeys(5);
-    } else if (pathArr.includes("admin") && pathArr.includes("profile")) {
-      setDefaultSelectedKeys(3);
     } else if (pathArr.includes("admin") && pathArr.includes("dashboard")) {
       setDefaultSelectedKeys(0);
-    }
+    } else if (pathArr.includes("admin") && pathArr.includes("admins")) {
+      setDefaultSelectedKeys(2);
+    }    
   }, [defaultSelectedKeys, path]);
 
   const getUser = async () => {
@@ -109,13 +109,12 @@ const SideBar = (prop: SideBarProp) => {
               navigate("/admin/users");
             },
           },
-
           {
             key: "2",
-            icon: <LuGraduationCap style={{ fontSize: "1.2rem" }} />,
-            label: "Courses",
+            icon: <LuUsers2 style={{ fontSize: "1.2rem" }} />,
+            label: "Admins",
             onClick: () => {
-              navigate("/admin/courses");
+              navigate("/admin/admins");
             },
           },
           {
@@ -125,7 +124,7 @@ const SideBar = (prop: SideBarProp) => {
             onClick: () => {
               navigate("/admin/profile");
             },
-          },
+          }         
         ]}
       />
     </Sider>
