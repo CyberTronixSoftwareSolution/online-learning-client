@@ -37,7 +37,7 @@ const AdminAdminPage = () => {
 
   const columns = [
     {
-      title: "image",
+      title: "Image",
       dataIndex: "image",
       key: "image",
       render: (image: string) => (
