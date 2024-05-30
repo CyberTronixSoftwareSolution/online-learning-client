@@ -1,4 +1,4 @@
-import { Modal, Progress } from "antd";
+import { Modal, Progress, Radio } from "antd";
 import ExamResultCard from "./ExamResultCard";
 import { useState } from "react";
 import DataNotFound from "./DataNotFound";
@@ -13,7 +13,17 @@ const UserProgress = (prop: UserProgressProps) => {
   const [position, setPosition] = useState<number>(1);
   return (
     <Modal
-      title={"USER PROGRESS"}
+      title={
+        <div className="flex gap-2 items-center">
+          <Radio.Group
+            value={position}
+            onChange={(e: any) => setPosition(e.target.value)}
+          >
+            <Radio.Button value={1}>Maths</Radio.Button>
+            <Radio.Button value={2}>Science</Radio.Button>
+          </Radio.Group>
+        </div>
+      }
       open={prop.open}
       centered
       width={600}
@@ -28,11 +38,11 @@ const UserProgress = (prop: UserProgressProps) => {
             steps={10}
             percent={
               position == 1
-                ? prop.selectedUser?.mathsLevel?.mark
-                  ? prop.selectedUser?.mathsLevel?.mark
+                ? prop.selectedUser?.mathsLevel?.score
+                  ? prop.selectedUser?.mathsLevel?.score
                   : 0
-                : prop.selectedUser?.scienceLevel?.mark
-                ? prop.selectedUser?.scienceLevel?.mark
+                : prop.selectedUser?.scienceLevel?.score
+                ? prop.selectedUser?.scienceLevel?.score
                 : 0
             }
             trailColor="rgba(0, 0, 0, 0.06)"
@@ -62,11 +72,11 @@ const UserProgress = (prop: UserProgressProps) => {
             </span>
             <span className="text-xl font-bold text-right text-black">
               {position == 1
-                ? prop.selectedUser?.mathsLevel?.points
-                  ? prop.selectedUser?.mathsLevel?.points
+                ? prop.selectedUser?.mathsLevel?.totalScore
+                  ? prop.selectedUser?.mathsLevel?.totalScore
                   : 0
-                : prop.selectedUser?.scienceLevel?.points
-                ? prop.selectedUser?.scienceLevel?.points
+                : prop.selectedUser?.scienceLevel?.totalScore
+                ? prop.selectedUser?.scienceLevel?.totalScore
                 : 0}
             </span>
           </div>
@@ -77,7 +87,7 @@ const UserProgress = (prop: UserProgressProps) => {
         <div
           className="overflow-hidden overflow-y-scroll p-1 rounded-xl border-2 gray-200"
           style={{
-            height: "240px",
+            height: "200px",
             scrollbarWidth: "none",
             msOverflowStyle: "none",
           }}

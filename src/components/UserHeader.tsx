@@ -130,6 +130,7 @@ const UserHeader = () => {
                   shape="circle"
                   icon={<MdOutlineCastForEducation />}
                   style={{ color: "white", fontSize: "1.2rem" }}
+                  disabled={!authUser?._id}
                 />
               </Tooltip>
             </Link>

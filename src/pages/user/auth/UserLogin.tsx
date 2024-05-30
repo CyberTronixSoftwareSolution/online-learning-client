@@ -164,12 +164,12 @@ const UserLogin = () => {
             </div>
           </div>
         </div>
-        <div className="flex-1 bg-green-100 text-center hidden lg:flex">
+        <div className="flex-1 bg-blue-100 text-center hidden lg:flex">
           <div
             className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
             style={{
               backgroundImage:
-                "url('https://drive.google.com/uc?export=view&id=1KZ_Ub_2lZ0dHbKV0fAIhxVhiQA183RCz')",
+                "url('https://res.cloudinary.com/dd3v8dwin/image/upload/v1717094657/login_jgzl2o.png')",
             }}
           ></div>
         </div>

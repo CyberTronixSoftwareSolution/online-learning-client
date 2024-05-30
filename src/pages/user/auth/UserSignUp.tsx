@@ -116,12 +116,12 @@ const UserSignUp = () => {
       {/* <CustomLoading /> */}
       <div className="bg-gray-100 text-gray-900 flex justify-center items-center ">
         <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-          <div className="hidden lg:flex lg:w-1/2 xl:w-5/12 bg-green-100">
+          <div className="hidden lg:flex lg:w-1/2 xl:w-5/12 bg-blue-100">
             <div
               className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
               style={{
                 backgroundImage:
-                  "url('https://drive.google.com/uc?export=view&id=1KZ_Ub_2lZ0dHbKV0fAIhxVhiQA183RCz')",
+                  "url('https://res.cloudinary.com/dd3v8dwin/image/upload/v1717094657/reg_afcjv1.png')",
               }}
             ></div>
           </div>

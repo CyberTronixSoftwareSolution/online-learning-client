@@ -1,4 +1,4 @@
-import { LuGraduationCap, LuUsers2 } from "react-icons/lu";
+import { LuUsers2 } from "react-icons/lu";
 import { AiOutlineDashboard } from "react-icons/ai";
 
 import { UserOutlined } from "@ant-design/icons";
@@ -28,13 +28,13 @@ const SideBar = (prop: SideBarProp) => {
     const pathArr = path.split("/");
     if (pathArr.includes("admin") && pathArr.includes("users")) {
       setDefaultSelectedKeys(1);
-    } else if (pathArr.includes("admin") && pathArr.includes("chat")) {
-      setDefaultSelectedKeys(5);
+    } else if (pathArr.includes("admin") && pathArr.includes("profile")) {
+      setDefaultSelectedKeys(3);
     } else if (pathArr.includes("admin") && pathArr.includes("dashboard")) {
       setDefaultSelectedKeys(0);
     } else if (pathArr.includes("admin") && pathArr.includes("admins")) {
       setDefaultSelectedKeys(2);
-    }    
+    }
   }, [defaultSelectedKeys, path]);
 
   const getUser = async () => {
@@ -124,7 +124,7 @@ const SideBar = (prop: SideBarProp) => {
             onClick: () => {
               navigate("/admin/profile");
             },
-          }         
+          },
         ]}
       />
     </Sider>
