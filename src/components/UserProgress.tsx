@@ -102,7 +102,7 @@ const UserProgress = (prop: UserProgressProps) => {
               <>
                 {prop.selectedUser?.mathsexam.map(
                   (exam: any, index: number) => (
-                    <ExamResultCard key={index} />
+                    <ExamResultCard key={index} result={exam} />
                   )
                 )}
               </>
@@ -110,7 +110,7 @@ const UserProgress = (prop: UserProgressProps) => {
               <>
                 {prop.selectedUser?.scienceexam.map(
                   (exam: any, index: number) => (
-                    <ExamResultCard key={index} />
+                    <ExamResultCard key={index} result={exam} />
                   )
                 )}
               </>

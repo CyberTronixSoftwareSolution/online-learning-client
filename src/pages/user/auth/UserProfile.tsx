@@ -275,7 +275,7 @@ const UserProfile = () => {
                     <>
                       {loggedInUser?.mathsexam.map(
                         (exam: any, index: number) => (
-                          <ExamResultCard key={index} />
+                          <ExamResultCard key={index} result={exam} />
                         )
                       )}
                     </>
@@ -283,7 +283,7 @@ const UserProfile = () => {
                     <>
                       {loggedInUser?.scienceexam.map(
                         (exam: any, index: number) => (
-                          <ExamResultCard key={index} />
+                          <ExamResultCard key={index} result={exam} />
                         )
                       )}
                     </>
@@ -319,11 +319,11 @@ const UserProfile = () => {
                   steps={10}
                   percent={
                     position == 1
-                      ? loggedInUser?.mathsLevel?.mark
-                        ? loggedInUser?.mathsLevel?.mark
+                      ? loggedInUser?.mathsLevel?.score
+                        ? loggedInUser?.mathsLevel?.score
                         : 0
-                      : loggedInUser?.scienceLevel?.mark
-                      ? loggedInUser?.scienceLevel?.mark
+                      : loggedInUser?.scienceLevel?.score
+                      ? loggedInUser?.scienceLevel?.score
                       : 0
                   }
                   trailColor="rgba(0, 0, 0, 0.06)"
@@ -353,11 +353,11 @@ const UserProfile = () => {
                   </span>
                   <span className="text-2xl font-bold text-right text-black">
                     {position == 1
-                      ? loggedInUser?.mathsLevel?.points
-                        ? loggedInUser?.mathsLevel?.points
+                      ? loggedInUser?.mathsLevel?.totalScore
+                        ? loggedInUser?.mathsLevel?.totalScore
                         : 0
-                      : loggedInUser?.scienceLevel?.points
-                      ? loggedInUser?.scienceLevel?.points
+                      : loggedInUser?.scienceLevel?.totalScore
+                      ? loggedInUser?.scienceLevel?.totalScore
                       : 0}
                   </span>
                 </div>

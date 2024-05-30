@@ -36,7 +36,7 @@ const ModulePage = () => {
       </section>
 
       {/* Questionaries */}
-      <ExamSection />
+      <ExamSection position={position} />
     </>
   );
 };

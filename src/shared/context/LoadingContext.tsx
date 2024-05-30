@@ -28,7 +28,7 @@ export const LoadingProvider = ({
 
   // " https://backend-fow5.onrender.com"
   const axiosInstance = axios.create({
-    baseURL: "https://backend-fow5.onrender.com",
+    baseURL: "http://localhost:5000",
     headers: {
       "Content-Type": "application/json",
     },
