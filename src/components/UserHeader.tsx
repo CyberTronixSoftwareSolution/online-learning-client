@@ -16,15 +16,18 @@ import {
 } from "@ant-design/icons";
 import { MdOutlineCastForEducation } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AiChat from "./chat/AiChat";
 import { useAuth } from "../shared/context/AuthContext";
 import { LocalStorageService } from "../shared/localStorage.service";
+import { useLoading } from "../shared/context/LoadingContext";
 
 const UserHeader = () => {
   const [searchPlaceHolder] = useState<string>("Search...");
   const [open, setOpen] = useState<boolean>(false);
+  const [userData, setUserData] = useState<any>({});
 
+  const { axiosInstance } = useLoading();
   const { authUser, setUser } = useAuth();
 
   const navigate = useNavigate();
@@ -34,6 +37,23 @@ const UserHeader = () => {
     setUser({} as any);
     LocalStorageService.removeUser();
   };
+
+  const getUser = async () => {
+    try {
+      const response = await axiosInstance.get(`/user/get/${authUser?._id}`);
+      if (response.data) {
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useMemo(() => {
+    if (authUser) {
+      getUser();
+    }
+  }, [authUser]);
 
   const menu = (
     <Menu>
@@ -64,17 +84,17 @@ const UserHeader = () => {
   );
   return (
     <>
-      <nav className="relative flex w-full py-2 shadow-dark-mild bg-blue-500 lg:py-4">
-        <div className="flex w-full flex-wrap items-center justify-between px-3">
+      <nav className="flex relative py-2 w-full bg-blue-500 shadow-dark-mild lg:py-4">
+        <div className="flex flex-wrap justify-between items-center px-3 w-full">
           <span className="text-xl text-black dark:text-white">
-            <h1 className="text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-2xl dark:text-white">
+            <h1 className="text-2xl font-extrabold tracking-tight leading-none text-gray-900 md:text-3xl lg:text-2xl dark:text-white">
               Coursera{" "}
               <mark className="px-2 text-blue-600 bg-white rounded dark:bg-white">
                 Learning
               </mark>
             </h1>
           </span>
-          <div className="flex items-center justify-end gap-2">
+          <div className="flex gap-2 justify-end items-center">
             <Link to="/">
               <Tooltip placement="bottom" title={"Home"}>
                 <Button
@@ -101,7 +121,7 @@ const UserHeader = () => {
               placeholder={searchPlaceHolder}
               prefix={<SearchOutlined />}
               style={{ width: 250 }}
-              className="rounded-full ml-2 mr-2"
+              className="mr-2 ml-2 rounded-full"
             />
             <Link to="/userCourse">
               <Tooltip placement="bottom" title={"Courses"}>
@@ -117,7 +137,11 @@ const UserHeader = () => {
 
           {authUser?._id ? (
             <Dropdown overlay={menu} placement="bottomLeft">
-              <Avatar size="large" icon={<UserOutlined />} />
+              {userData?.image ? (
+                <Avatar size="large" src={userData?.image} />
+              ) : (
+                <Avatar size="large" icon={<UserOutlined />} />
+              )}
             </Dropdown>
           ) : (
             <Link to="/signIn">

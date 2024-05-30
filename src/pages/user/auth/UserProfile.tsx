@@ -6,6 +6,7 @@ import {
   Progress,
   Input,
   Upload,
+  Radio,
 } from "antd";
 import {
   LogoutOutlined,
@@ -21,6 +22,9 @@ import { useEffect, useState } from "react";
 import { useLoading } from "../../../shared/context/LoadingContext";
 import { useAuth } from "../../../shared/context/AuthContext";
 import { LocalStorageService } from "../../../shared/localStorage.service";
+import uploadImageToCloudinary from "../../../shared/cloudinaryUpload.service";
+import { CustomToastService } from "../../../shared/message.service";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const [loggedInUser, setLoggedInUser] = useState<any>(null);
@@ -28,9 +32,11 @@ const UserProfile = () => {
   const [errors, setErrors] = useState<any>({});
   const [open, setOpen] = useState<boolean>(false);
   const [fileList, setFileList] = useState<any>([]);
+  const [position, setPosition] = useState(1);
 
   const { axiosInstance } = useLoading();
   const { authUser, setUser } = useAuth();
+  const navigate = useNavigate();
 
   const getUserProfile = async () => {
     try {
@@ -49,7 +55,57 @@ const UserProfile = () => {
     }
   }, [authUser]);
 
-  const onUpdateUser = async () => {};
+  const onUpdateUser = async () => {
+    const validationErrors = validate(userData);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    } else {
+      setErrors({});
+    }
+
+    let request: any = {
+      name: userData.name,
+      phone: userData.phone,
+      age: userData.age,
+    };
+    try {
+      if (fileList.length > 0) {
+        const imageUrl = await uploadImageToCloudinary(
+          fileList[0].originFileObj,
+          "profile_images",
+          axiosInstance
+        );
+
+        request = { ...request, image: imageUrl };
+      }
+
+      const response = await axiosInstance.put(
+        `/user/update/${loggedInUser?._id}`,
+        request
+      );
+
+      if (response.data) {
+        clearUserDetails();
+        getUserProfileAndAupdateAuth();
+        CustomToastService.success(response.data.message);
+      }
+    } catch (error: any) {
+      CustomToastService.error(error.response.data.message);
+    }
+  };
+
+  const getUserProfileAndAupdateAuth = async () => {
+    try {
+      const response = await axiosInstance.get(`/user/get/${authUser?._id}`);
+      if (response.data) {
+        setLoggedInUser(response.data);
+        setUser({ ...response.data, role: "User" });
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   const handleChange = (info: any) => {
     setFileList(info.fileList);
@@ -75,6 +131,8 @@ const UserProfile = () => {
 
   const logout = () => {
     LocalStorageService.removeUser();
+    setUser({} as any);
+    navigate("/signIn");
   };
 
   //  validate user
@@ -109,7 +167,6 @@ const UserProfile = () => {
 
   return (
     <>
-      {" "}
       <div className="px-3 py-1">
         <div className="flex relative flex-col mt-6 w-full text-gray-700 bg-clip-border bg-white rounded-xl shadow-md">
           <div className="flex justify-between items-center px-6 py-2">
@@ -151,6 +208,7 @@ const UserProfile = () => {
                 title="Logout Confirmation"
                 description="Are you sure to logout?"
                 onCancel={() => {}}
+                onConfirm={logout}
                 okText="Yes"
                 cancelText="No"
                 placement="bottomLeft"
@@ -172,6 +230,16 @@ const UserProfile = () => {
               <h5 className="block mb-2 font-sans text-xl antialiased font-semibold tracking-normal leading-snug text-blue-gray-900">
                 Previous Exam Results
               </h5>
+
+              <div>
+                <Radio.Group
+                  value={position}
+                  onChange={(e: any) => setPosition(e.target.value)}
+                >
+                  <Radio.Button value={1}>Maths</Radio.Button>
+                  <Radio.Button value={2}>Science</Radio.Button>
+                </Radio.Group>
+              </div>
             </div>
             <div className="px-6 py-2">
               <div
@@ -200,6 +268,16 @@ const UserProfile = () => {
               <h5 className="block mb-2 font-sans text-xl antialiased font-semibold tracking-normal leading-snug text-blue-gray-900">
                 Performance
               </h5>
+
+              <div>
+                <Radio.Group
+                  value={position}
+                  onChange={(e: any) => setPosition(e.target.value)}
+                >
+                  <Radio.Button value={1}>Maths</Radio.Button>
+                  <Radio.Button value={2}>Science</Radio.Button>
+                </Radio.Group>
+              </div>
             </div>
             <div className="px-6 py-2">
               <div className="flex justify-center align-middle">

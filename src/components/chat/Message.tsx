@@ -29,7 +29,13 @@ const Message = ({ message, userData }: MessageProps) => {
       ) : (
         <Avatar size={28} icon={<BsRobot />} />
       )}
-      <div className="flex flex-col w-full max-w-[600px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl">
+      <div
+        className={`flex flex-col w-full max-w-[600px] leading-1.5 p-4 ${
+          message.role === "user"
+            ? "border-gray-200 bg-gray-100 rounded-s-xl rounded-ee-xl"
+            : "border-blue-200 bg-blue-100 rounded-e-xl rounded-es-xl"
+        }`}
+      >
         <div className="flex items-center space-x-2 rtl:space-x-reverse">
           <span className="text-sm font-semibold text-gray-900">
             {message.role === "user" ? "You" : "Bot"}

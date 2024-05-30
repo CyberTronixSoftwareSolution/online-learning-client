@@ -9,6 +9,7 @@ import { Button, Drawer, Input } from "antd";
 import Message from "./Message";
 import { useAuth } from "../../shared/context/AuthContext";
 import { useLoading } from "../../shared/context/LoadingContext";
+import { BsRobot } from "react-icons/bs";
 
 interface AiChatProps {
   setOpen: (open: boolean) => void;
@@ -147,6 +148,7 @@ const AiChat = (props: AiChatProps) => {
       }
     >
       <div className="flex flex-col gap-2">
+        {messages.length === 0 && <ChatMessageNotFound />}
         {messages.map((message, index) => (
           <Message key={index} message={message} userData={userData} />
         ))}
@@ -157,3 +159,17 @@ const AiChat = (props: AiChatProps) => {
 };
 
 export default AiChat;
+
+const ChatMessageNotFound = () => {
+  return (
+    <div className="flex flex-col justify-center items-center h-[60vh]">
+      <BsRobot style={{ fontSize: "100px" }} className="text-gray-400" />
+      <div className="mt-2 w-96 text-center">
+        <p className="text-sm text-center text-gray-500">
+          I'm Cosera Learning Artifical Interligent Assistant, Feel free to ask
+          anything from me!
+        </p>
+      </div>
+    </div>
+  );
+};
