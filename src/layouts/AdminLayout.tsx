@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { RightCircleOutlined, LeftCircleOutlined } from "@ant-design/icons";
 import {
   Button,
@@ -12,18 +12,24 @@ import {
 import SideBar from "../components/sidebar/sidebar.tsx";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useLoading } from "../shared/context/LoadingContext.tsx";
+import { useAuth } from "../shared/context/AuthContext.tsx";
+import { LocalStorageService } from "../shared/localStorage.service.ts";
 const { Header, Content } = Layout;
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [breadcrumbItem, setBreadcrumbItem] = useState<React.ReactNode[]>([]);
   const [pageTitle, setPageTitle] = useState<string>("Dashboard");
+  const [userData, setUserData] = useState<any>({});
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const location = useLocation();
   const navigate = useNavigate();
+  const { axiosInstance } = useLoading();
+  const { authUser, setUser } = useAuth();
 
   const path = location.pathname;
 
@@ -47,7 +53,26 @@ const AdminLayout = () => {
 
   const logout = () => {
     navigate("/admin");
+    LocalStorageService.removeUser();
+    setUser({} as any);
   };
+
+  const getUser = async () => {
+    try {
+      const response = await axiosInstance.get(`/admin/get/${authUser?._id}`);
+      if (response.data) {
+        setUserData(response.data);
+      }
+    } catch (error: any) {
+      console.log(error.response.data.message);
+    }
+  };
+
+  useMemo(() => {
+    if (authUser) {
+      getUser();
+    }
+  }, [authUser]);
 
   const menu = (
     <Menu>
@@ -97,7 +122,11 @@ const AdminLayout = () => {
             />
             <div className="mr-3">
               <Dropdown overlay={menu} placement="bottomLeft">
-                <Avatar size="large" icon={<UserOutlined />} />
+                {userData?.image ? (
+                  <Avatar size="large" src={userData?.image} />
+                ) : (
+                  <Avatar size="large" icon={<UserOutlined />} />
+                )}
               </Dropdown>
             </div>
           </div>

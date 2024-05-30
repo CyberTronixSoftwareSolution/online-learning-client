@@ -19,7 +19,8 @@ const AdminProfilePage = () => {
   const [userData, setUserData] = useState<any>({});
   const [errors, setErrors] = useState<any>({});
   const [open, setOpen] = useState<boolean>(false);
-  const [imageFile, setImageFile] = useState<any>(null);
+  const [fileList, setFileList] = useState<any>([]);
+
   const { axiosInstance } = useLoading();
   const { authUser, setUser } = useAuth();
 
@@ -56,9 +57,9 @@ const AdminProfilePage = () => {
       phone: userData.phone,
     };
     try {
-      if (imageFile && imageFile?.status != "removed") {
+      if (fileList.length > 0) {
         const imageUrl = await uploadImageToCloudinary(
-          imageFile,
+          fileList[0].originFileObj,
           "profile_images",
           axiosInstance
         );
@@ -82,11 +83,21 @@ const AdminProfilePage = () => {
     }
   };
 
+  const handleChange = (info: any) => {
+    setFileList(info.fileList);
+  };
+
+  const handleRemove = (file: any) => {
+    setFileList((prevList: any) =>
+      prevList.filter((item: any) => item.uid !== file.uid)
+    );
+  };
+
   const clearUserDetails = () => {
     setUserData({});
     setErrors({});
     setOpen(false);
-    setImageFile(null);
+    setFileList([]);
   };
 
   const showEditProfile = () => {
@@ -252,17 +263,16 @@ const AdminProfilePage = () => {
               <Upload
                 listType="text"
                 className="upload-list-inline"
-                action={"http://localhost:3000/"}
                 showUploadList={{ showRemoveIcon: true }}
                 accept=".jpg, .jpeg, .png"
                 maxCount={1}
                 beforeUpload={(file: any) => {
-                  console.log(file);
-                  return false;
+                  console.log("file", file);
+                  return false; // Prevent automatic upload
                 }}
-                onChange={(e) => {
-                  setImageFile(e.file);
-                }}
+                onChange={handleChange}
+                onRemove={handleRemove}
+                fileList={fileList}
               >
                 <Button icon={<UploadOutlined />}>Upload</Button>
               </Upload>
