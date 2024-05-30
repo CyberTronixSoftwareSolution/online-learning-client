@@ -1,8 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { useState, useRef, useEffect, useMemo } from "react";
+import {
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+} from "@google/generative-ai";
 import { SendOutlined } from "@ant-design/icons";
 import { Button, Drawer, Input } from "antd";
 import Message from "./Message";
+import { useAuth } from "../../shared/context/AuthContext";
+import { useLoading } from "../../shared/context/LoadingContext";
 
 interface AiChatProps {
   setOpen: (open: boolean) => void;
@@ -10,11 +16,11 @@ interface AiChatProps {
 }
 
 // Move API key to environment variable for security
-const apiKey = 'AIzaSyDmoLDZk54pWHBZmHSxcH7y5UI-w1gxIUY';
+const apiKey = "AIzaSyDmoLDZk54pWHBZmHSxcH7y5UI-w1gxIUY";
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const model = genAI.getGenerativeModel({
-  model: 'gemini-1.5-flash',
+  model: "gemini-1.5-flash",
 });
 
 const generationConfig = {
@@ -22,7 +28,7 @@ const generationConfig = {
   topP: 0.95,
   topK: 64,
   maxOutputTokens: 8192,
-  responseMimeType: 'text/plain',
+  responseMimeType: "text/plain",
 };
 
 const safetySettings = [
@@ -45,16 +51,33 @@ const safetySettings = [
 ];
 
 const AiChat = (props: AiChatProps) => {
-  const [messages, setMessages] = useState<{ role: string; text: string }[]>([]);
-  const [input, setInput] = useState('');
+  const [messages, setMessages] = useState<{ role: string; text: string }[]>(
+    []
+  );
+  const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [userData, setUserData] = useState<any>(null);
+
+  const { axiosInstance } = useLoading();
+  const { authUser } = useAuth();
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(scrollToBottom, [messages]);
+
+  useMemo(async () => {
+    try {
+      const response = await axiosInstance.get(`/user/get/${authUser?._id}`);
+      if (response.data) {
+        setUserData(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }, [useAuth]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -74,16 +97,23 @@ const AiChat = (props: AiChatProps) => {
       });
 
       const result = await chatSession.sendMessage(input);
-      const responseMessage = { role: 'model', text: await result.response.text() };
+      const responseMessage = {
+        role: "model",
+        text: await result.response.text(),
+      };
 
-      setMessages([...messages, { role: 'user', text: input }, responseMessage]);
-      setInput('');
+      setMessages([
+        ...messages,
+        { role: "user", text: input },
+        responseMessage,
+      ]);
+      setInput("");
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error("Error sending message:", error);
       if (error instanceof Error) {
         alert(`An error occurred: ${error.message}`);
       } else {
-        alert('An unknown error occurred');
+        alert("An unknown error occurred");
       }
     } finally {
       setIsSending(false);
@@ -100,17 +130,17 @@ const AiChat = (props: AiChatProps) => {
       }}
       open={props.open}
       footer={
-        <div className="flex justify-center align-middle w-full gap-2">
-          <Input 
-            placeholder="Message to AI" 
+        <div className="flex gap-2 justify-center w-full align-middle">
+          <Input
+            placeholder="Message to AI"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onPressEnter={sendMessage}
           />
-          <Button 
-            type="primary" 
-            icon={<SendOutlined rotate={270} />} 
-            onClick={sendMessage} 
+          <Button
+            type="primary"
+            icon={<SendOutlined rotate={270} />}
+            onClick={sendMessage}
             loading={isSending}
           />
         </div>
@@ -118,7 +148,7 @@ const AiChat = (props: AiChatProps) => {
     >
       <div className="flex flex-col gap-2">
         {messages.map((message, index) => (
-          <Message key={index} message={message} />
+          <Message key={index} message={message} userData={userData} />
         ))}
         <div ref={messagesEndRef} />
       </div>

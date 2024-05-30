@@ -26,9 +26,9 @@ export const LoadingProvider = ({
     setLoading(isLoading);
   };
 
-  // " https://backendnizz.onrender.com"
+  // " https://backend-fow5.onrender.com"
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://backend-fow5.onrender.com",
     headers: {
       "Content-Type": "application/json",
     },
