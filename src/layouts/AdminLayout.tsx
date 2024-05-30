@@ -101,7 +101,7 @@ const AdminLayout = () => {
   return (
     <Layout
       style={{
-        minHeight: "100vh",
+        height: "100vh",
       }}
     >
       <SideBar collapsed={collapsed} />
@@ -153,6 +153,7 @@ const AdminLayout = () => {
             minHeight: 280,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
+            overflow: "scroll",
           }}
         >
           <Outlet />

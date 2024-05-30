@@ -1,36 +1,31 @@
 import { Avatar, Button, Input, Table, Tooltip } from "antd";
 import { SearchOutlined, UserOutlined, RiseOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnyObject } from "antd/es/_util/type";
 import UserProgress from "../../components/UserProgress";
+import { useLoading } from "../../shared/context/LoadingContext";
 
 const AdminUserPage = () => {
-  const [users, setUsers] = useState([
-    {
-      name: "John Doe",
-      email: "jhone@gmail.com",
-      dob: "1990-01-01",
-      createdAt: "2021-08-01T00:00:00.000Z",
-    },
-  ]);
-  const [tempUsers] = useState([]);
+  const [users, setUsers] = useState<any>([]);
+  const [tempUsers, setTempUsers] = useState<any>([]);
   const [open, setOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<any>();
 
-  // const { loading, axiosInstance } = useLoading();
+  const { axiosInstance } = useLoading();
 
-  // useEffect(() => {
-  //   loadAllUsers();
-  // }, []);
+  useEffect(() => {
+    loadAllUsers();
+  }, []);
 
-  // const loadAllUsers = async () => {
-  //   try {
-  //     const response = await axiosInstance.get("/user/getAll");
-  //     setUsers(response.data);
-  //     setTempUsers(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const loadAllUsers = async () => {
+    try {
+      const response = await axiosInstance.get("/user/getAll");
+      setUsers(response.data);
+      setTempUsers(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const onSearch = (e: string) => {
     if (e === "") {
@@ -40,6 +35,18 @@ const AdminUserPage = () => {
         user.name.toLowerCase().includes(e.toLowerCase())
       );
       setUsers(filteredUsers);
+    }
+  };
+
+  const showUserProgress = async (record: any) => {
+    try {
+      const response = await axiosInstance.get(`/user/get/${record?._id}`);
+      if (response.data) {
+        setSelectedUser(response.data);
+        setOpen(true);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
     }
   };
 
@@ -94,16 +101,13 @@ const AdminUserPage = () => {
     {
       title: "Action",
       key: "action",
-      render: (record: AnyObject) => (
+      render: (record: any) => (
         <div className="flex gap-2">
           <Tooltip title="User Progress" placement="right">
             <Button
               type="primary"
               icon={<RiseOutlined />}
-              onClick={() => {
-                console.log(record);
-                setOpen(true);
-              }}
+              onClick={() => showUserProgress(record)}
             />
           </Tooltip>
         </div>
@@ -140,7 +144,7 @@ const AdminUserPage = () => {
         </div>
       </div>
 
-      <UserProgress open={open} setOpen={setOpen} />
+      <UserProgress open={open} setOpen={setOpen} selectedUser={selectedUser} />
     </>
   );
 };
