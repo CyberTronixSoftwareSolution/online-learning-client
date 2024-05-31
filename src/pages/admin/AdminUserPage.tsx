@@ -86,9 +86,9 @@ const AdminUserPage = () => {
       key: "email",
     },
     {
-      title: "Date of Birth",
-      dataIndex: "dob",
-      key: "dob",
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
     },
     {
       title: "Joined Date",
